@@ -8,7 +8,7 @@ class Charge
 {
 public:
 	Vector2D<double> loc;
-	double ch;
+	int ch;
 	Charge();
-	template<typename T> Charge(Vector2D<T>& location, double charge);
+	Charge(Vector2D<double> location, int charge);
 };

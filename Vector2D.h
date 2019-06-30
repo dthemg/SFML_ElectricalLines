@@ -19,13 +19,16 @@ public:
 	template<typename S> Vector2D operator+(const Vector2D<S>& other) const;
 	template<typename S> Vector2D operator-(const Vector2D<S>& other) const;
 	template<typename S> Vector2D operator*(const Vector2D<S>& other) const;
+	template<typename S> Vector2D& operator=(const Vector2D<S>& other);
 
-	// Operators with a number
-	// Not done yet...
+	// Operations between vector and scalar
+	Vector2D operator*(T s) const;
+	Vector2D operator/(T s) const;
 
 
 
-	double Length() const;
+
+	double length() const;
 };
 
 #ifndef _VECTOR_2D_IMPL

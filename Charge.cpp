@@ -8,7 +8,7 @@ Charge::Charge() {
 }
 
 // Regular constructor
-template<typename T> Charge::Charge(Vector2D<T>& location, double ch)
+Charge::Charge(Vector2D<double> location, int charge)
 {
 	loc = location;
 	ch = charge;
