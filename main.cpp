@@ -33,7 +33,7 @@ int main()
 	cout << sumPos2.x << " " << sumPos2.y << endl;
 
 	double startX = 200.0;
-	double startY = 130.0;
+	double startY = 140.0;
 
 	while (window.isOpen())
 	{
