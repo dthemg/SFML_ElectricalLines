@@ -21,13 +21,16 @@ public:
 	double Potential(const Vector2D<double>& pos);
 
 	// Computational
-	Vector2D<double> computeEulerStep(const Vector2D<double>& pos, double stepsize);
-	
+	Vector2D<double> computeEulerStep(const Vector2D<double>& pos);
+	double distanceToNearestCharge(const Vector2D<double>& pos);
+	void drawFieldLines(sf::RenderWindow& win);
+
 
 private:
-	double chargeScale = 1.0;
+	double chargeScale = 3.0;
 	sf::Color negCol = sf::Color(34, 114, 189);
 	sf::Color posCol = sf::Color(199, 44, 30);
+	double stepsize = 5;
 };
 
 

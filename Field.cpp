@@ -3,6 +3,9 @@
 #include <vector>
 #include <iostream>
 #include "Vector2D.h"
+#include <math.h>
+
+constexpr auto PI = 3.14159265;
 
 // Default constructor
 Field::Field()
@@ -52,7 +55,7 @@ void Field::draw(sf::RenderWindow& win)
 	for (std::vector<Charge*>::iterator it = chargeList.begin(); it != chargeList.end(); it++)
 	{
 		double radius = (double)chargeScale * ((*it)->ch);
-		sf::CircleShape chRep(20, 50);
+		sf::CircleShape chRep = sf::CircleShape(radius, 50);
 		chRep.setOrigin(radius, radius);
 		chRep.setPosition((*it)->loc.x, (*it)->loc.y);
 		if ((*it)->ch > 0) {
@@ -64,10 +67,59 @@ void Field::draw(sf::RenderWindow& win)
 	}
 }
 
-Vector2D<double> Field::computeEulerStep(const Vector2D<double>& pos, double stepsize)
+Vector2D<double> Field::computeEulerStep(const Vector2D<double>& pos)
 {
 	Vector2D<double> ef = Field::E(pos);
-	Vector2D<double> newPos = pos + ef * stepsize;
+	Vector2D<double> newPos = pos + (ef * stepsize)/ef.length();
 	return newPos;
 }
 
+double Field::distanceToNearestCharge(const Vector2D<double>& pos)
+{
+	double maxDist = 0;
+	for (std::vector<Charge*>::iterator it = chargeList.begin(); it != chargeList.end(); it++)
+	{
+		Vector2D<double> diffVec = pos - (*it)->loc;
+		double dist = diffVec.length();
+		if (dist > maxDist)
+			maxDist = dist;
+	}
+	return maxDist;
+}
+
+void Field::drawFieldLines(sf::RenderWindow& win)
+{
+	int a = 1 + 1;
+	/*
+	for (std::vector<Charge*>::iterator it = chargeList.begin; it != chargeList.end(); it++)
+	{
+		unsigned numLines = std::abs((*it)->ch);
+		
+		for (unsigned i = 0; i < numLines; i++)
+		{
+			double theta = (double)i * 2 * PI / numLines;
+			double startX = (*it)->loc.x + cos(theta) * chargeScale * abs((*it)->ch);
+			double startY = (*it)->loc.y + sin(theta) * chargeScale * abs((*it)->ch);
+			
+			Vector2D<double> thisPos = Vector2D<double>(startX, startY);
+			Vector2D<double> prevPos = Vector2D<double>(startX, startY);
+			
+			for (unsigned i = 0; i < 1000; i++)
+			{
+				if (distanceToNearestCharge(thisPos) < 10)
+					break;
+
+				thisPos = computeEulerStep(thisPos);
+				sf::Vertex line[] =
+				{
+					sf::Vertex(sf::Vector2f(prevPos.x, prevPos.y)),
+					sf::Vertex(sf::Vector2f(thisPos.x, thisPos.y))
+				};
+				win.draw(line, 2, sf::Lines);
+				prevPos = thisPos;
+			}
+			
+			
+		}
+	}*/
+}
